@@ -1,24 +1,24 @@
 {
   "rewrites": [
     {
-      "source": "/",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "cv.clementberger.fr"
         }
       ],
-      "destination": "/cv.pdf"
+      "destination": "/public/cv.pdf"
     },
     {
-      "source": "/",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "transfert.clementberger.fr"
         }
       ],
-      "destination": "/transfert/index.html"
+      "destination": "/public/transfert/index.html"
     }
   ]
 }
