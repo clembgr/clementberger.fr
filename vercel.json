@@ -8,7 +8,7 @@
           "value": "cv.clementberger.fr"
         }
       ],
-      "destination": "/public/cv.pdf"
+      "destination": "/cv.pdf"
     },
     {
       "source": "/",
@@ -18,7 +18,7 @@
           "value": "transfert.clementberger.fr"
         }
       ],
-      "destination": "/public/transfert/index.html"
+      "destination": "/transfert/index.html"
     }
   ]
 }
