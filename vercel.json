@@ -19,10 +19,6 @@
         }
       ],
       "destination": "/transfert/index.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/$1"
     }
   ]
 }
