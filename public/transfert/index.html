@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Transfert - Clément Berger</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f4f4; }
+        .card { background: white; padding: 2rem; border-radius: 10px; shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Transfert de fichiers</h1>
+        <input type="file" id="fileInput">
+        <button onclick="upload()">Envoyer</button>
+        <p id="status"></p>
+    </div>
+    <script>
+        function upload() {
+            const file = document.getElementById('fileInput').files[0];
+            if(!file) return alert("Choisis un fichier !");
+            document.getElementById('status').innerText = "Upload en cours (Logique à coder)...";
+            // Ici on ajoutera la logique Vercel Blob plus tard
+        }
+    </script>
+</body>
+</html>
