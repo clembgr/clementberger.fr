@@ -9,17 +9,27 @@
             "value": "cv.clementberger.fr"
           }
         ],
-        "destination": "/cv.pdf"
+        "destination": "/public/cv.pdf"
       },
       {
-        "source": "/:path*",
+        "source": "/",
         "has": [
           {
             "type": "host",
             "value": "transfert.clementberger.fr"
           }
         ],
-        "destination": "/transfert/:path*"
+        "destination": "/public/transfert/index.html"
+      },
+      {
+        "source": "/:path+",
+        "has": [
+          {
+            "type": "host",
+            "value": "transfert.clementberger.fr"
+          }
+        ],
+        "destination": "/public/transfert/:path+"
       }
     ]
   }
