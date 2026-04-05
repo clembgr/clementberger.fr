@@ -1,32 +1,16 @@
 {
   "rewrites": [
     {
-      "source": "/:path*",
+      "source": "/",
       "has": [
-        {
-          "type": "host",
-          "value": "cv.clementberger.fr"
-        }
+        { "type": "host", "value": "cv.clementberger.fr" }
       ],
       "destination": "/cv.pdf"
     },
     {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "transfert.clementberger.fr"
-        }
-      ],
-      "destination": "/transfert/index.html"
-    },
-    {
       "source": "/:path*",
       "has": [
-        {
-          "type": "host",
-          "value": "transfert.clementberger.fr"
-        }
+        { "type": "host", "value": "transfert.clementberger.fr" }
       ],
       "destination": "/transfert/:path*"
     }
