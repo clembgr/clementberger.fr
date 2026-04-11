@@ -27,11 +27,14 @@ function ease(t) {
 
 
 function getChambreTransform(vW, vH) {
+  
   const scale = Math.max(vW / CHAMBRE_W, vH / SVG_H) * ZOOM
 
+  
   const tx = (vW - CHAMBRE_W * scale) / 2 - CHAMBRE_X * scale
              + OFFSET_CHAMBRE.x * CHAMBRE_W * scale
 
+  
   const ty = (vH - SVG_H * scale) / 2
              + OFFSET_CHAMBRE.y * SVG_H * scale
 
@@ -40,11 +43,15 @@ function getChambreTransform(vW, vH) {
 
 function getPlanTransform(vH) {
   const scale = vH / SVG_H
+  
   return { scale, tx: OFFSET_PLAN.x, ty: OFFSET_PLAN.y - 1 }
 }
 
 function getPanBounds(vW, vH, t) {
   const { scale, tx, ty } = t
+  
+  
+  
   return {
     minX: tx + CHAMBRE_X * scale,
     maxX: tx + SVG_W * scale - vW,
@@ -53,6 +60,7 @@ function getPanBounds(vW, vH, t) {
   }
 }
 
+
 export default function Home() {
   const wrapperRef = useRef(null)
   const rafRef     = useRef(null)
@@ -60,6 +68,7 @@ export default function Home() {
   const cursorRef  = useRef(null)
   const ringRef    = useRef(null)
 
+  
   const vpRef  = useRef({ vW: 0, vH: 0 })
 
   const cur       = useRef({ scale: 1, tx: 0, ty: 0 })
@@ -74,6 +83,7 @@ export default function Home() {
   const [showHint,   setShowHint]   = useState(false)
   const [vp, setVp] = useState({ vW: 0, vH: 0 })
 
+  
   useEffect(() => {
     const update = () => {
       const val = { vW: window.innerWidth, vH: window.innerHeight }
@@ -85,6 +95,7 @@ export default function Home() {
     return () => window.removeEventListener('resize', update)
   }, [])
 
+  
   useEffect(() => {
     if (!vp.vW) return
     const t = getChambreTransform(vp.vW, vp.vH)
@@ -122,9 +133,11 @@ export default function Home() {
     return () => window.removeEventListener('mousemove', mv)
   }, [])
 
+  
   useEffect(() => {
     const tick = () => {
       if (!transitioning.current && !zoomed.current) {
+        
         const { vW, vH } = vpRef.current
         if (!vW) { rafRef.current = requestAnimationFrame(tick); return }
 
@@ -153,7 +166,7 @@ export default function Home() {
 
     rafRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafRef.current)
-  }, [])
+  }, []) 
 
   const animateTo = useCallback((to, onDone) => {
     if (animRafRef.current) cancelAnimationFrame(animRafRef.current)
