@@ -18,6 +18,25 @@ npm run dev
 3. Framework détecté automatiquement : **Next.js**
 4. Deploy 🚀
 
+---
+
+## Calibrer la position du saxophone
+
+Dans `pages/index.js`, ligne ~17, ajuster `SAX_POSITION` :
+
+```js
+const SAX_POSITION = {
+  x: 52,   // % depuis la gauche du SVG (0-100)
+  y: 58,   // % depuis le haut du SVG (0-100)
+  w: 5,    // largeur en % du SVG
+  h: 8,    // hauteur en % du SVG
+}
+```
+
+Le SVG `chambre_vide.svg` a un viewBox de **4000 × 2286**.  
+Exemple : si le saxo est à x=2100px, y=1300px dans l'image → `x: 52.5, y: 56.9`
+
+---
 
 ## Navigation
 
