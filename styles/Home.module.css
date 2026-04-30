@@ -1,13 +1,11 @@
-
 .viewport {
   position: fixed;
   inset: 0;
   overflow: hidden;
-  background: #1a1008;   
   cursor: none;
-  transition: background 0.4s ease;
+  transition: background 0.5s ease;
+  isolation: isolate;
 }
-
 
 .wrapper {
   position: absolute;
@@ -15,10 +13,18 @@
   left: 0;
   transform-origin: top left;
   will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
+.svgStatic {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: none;
+}
 
-.svg {
+.svgImg {
   display: block;
   width: 100%;
   height: 100%;
@@ -26,58 +32,125 @@
   pointer-events: none;
 }
 
-
-.sax {
+.porteHint {
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  cursor: none;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 1.4s ease, transform 1.4s ease;
+  left: 34%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: pulseHint 2s ease-in-out infinite;
 }
 
-.saxOn {
-  opacity: 1;
-  transform: translateY(0);
+.porteHint span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.4em;
+  color: rgba(255, 240, 200, 0.8);
+  text-transform: lowercase;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
 }
 
-.sax:hover .saxImg {
-  filter: drop-shadow(0 0 16px rgba(160, 100, 20, 0.8));
-  transform: scale(1.06) rotate(-1.5deg);
+@keyframes pulseHint {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) translateY(0); }
+  50%       { opacity: 1;   transform: translate(-50%, -50%) translateY(-4px); }
 }
 
-.sax:hover .saxLabel {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.saxImg {
+.svgInline {
+  display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+}
+
+.svgInline svg {
+  display: block;
+  user-select: none;
+}
+
+
+.cvFrame {
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  cursor: none;
+  pointer-events: all;
+}
+
+.cvImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
   pointer-events: none;
   user-select: none;
-  transition: filter 0.4s ease, transform 0.4s ease;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.45));
 }
 
-.saxLabel {
+.paysageFrame {
+  position: absolute;
+  overflow: hidden;
+}
+
+.paysageVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+.ordiIframe {
+  position: absolute;
+  border: none;
+  display: block;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+}
+
+.backBtn {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  bottom: auto;
+  transform: none;
+  z-index: 100;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.65rem;
+  font-size: 0.85rem;
   font-weight: 300;
-  letter-spacing: 0.35em;
-  color: rgba(100, 60, 10, 0.7);
+  letter-spacing: 0.25em;
+  color: rgba(200, 180, 140, 0.8);
   text-transform: lowercase;
-  margin-top: 6px;
-  opacity: 0;
-  transform: translateY(5px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  white-space: nowrap;
-  pointer-events: none;
+  background: rgba(10, 8, 6, 0.6);
+  border: 1px solid rgba(200, 180, 140, 0.3);
+  border-radius: 2px;
+  padding: 6px 14px;
+  cursor: none;
+  backdrop-filter: blur(4px);
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
+.backBtn:hover {
+  color: rgba(200, 180, 140, 1);
+  border-color: rgba(200, 180, 140, 0.7);
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 9990;
+  pointer-events: none;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(30, 15, 5, 0.75);
+  padding: 3px 8px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  text-transform: lowercase;
+}
 
 .vignette {
   position: fixed;
@@ -87,11 +160,10 @@
     ellipse at center,
     transparent 40%,
     rgba(180, 130, 50, 0.06) 70%,
-    rgba(120, 80, 20, 0.20) 100%
+    rgba(120, 80, 20, 0.22) 100%
   );
   z-index: 10;
 }
-
 
 .hint {
   position: fixed;
@@ -115,20 +187,17 @@
   to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-
 .cursor {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 6px;
-  height: 6px;
+  top: 0; left: 0;
+  width: 6px; height: 6px;
   background: rgba(120, 75, 15, 0.65);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
   transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
-  mix-blend-mode: multiply;
+  mix-blend-mode: difference;
 }
 
 .cursorHide {
@@ -139,10 +208,8 @@
 
 .ring {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 26px;
-  height: 26px;
+  top: 0; left: 0;
+  width: 26px; height: 26px;
   border: 1px solid rgba(120, 75, 15, 0.3);
   border-radius: 50%;
   pointer-events: none;
@@ -156,4 +223,75 @@
   width: 46px !important;
   height: 46px !important;
   border-color: rgba(120, 75, 15, 0.7) !important;
+}
+
+.ordiVideo3D {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+  pointer-events: none;
+  transform-origin: center center;
+  transform: perspective(800px) rotateY(-4deg) rotateX(1deg) skewX(0.5deg) scale(1.01);
+}
+
+.arrowBtn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem;
+  font-weight: 300;
+  color: rgba(201, 168, 76, 0.7);
+  background: transparent;
+  border: none;
+  cursor: none;
+  padding: 0.5rem 1.8rem;
+  line-height: 1;
+  transition: color 0.4s ease;
+  animation: pulseArrow 3s ease-in-out infinite;
+  pointer-events: all;
+}
+.arrowBtn:hover {
+  color: rgba(201, 168, 76, 1);
+}
+@keyframes pulseArrow {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 0.85; }
+}
+
+.unsupportedScreen {
+  position: fixed;
+  inset: 0;
+  background: var(--warm-black, #0a0806);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  color: rgba(255, 240, 200, 0.8);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  z-index: 10000;
+  cursor: auto;
+  line-height: 1.6;
+}
+
+.unsupportedScreen p {
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+}
+
+.unsupportedScreen a {
+  color: var(--gold, #c9a84c);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold, #c9a84c);
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.unsupportedScreen a:hover {
+  opacity: 0.7;
 }
