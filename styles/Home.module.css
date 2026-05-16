@@ -15,6 +15,7 @@
   will-change: transform;
   backface-visibility: hidden;
   transform: translateZ(0);
+  contain: layout style;
 }
 
 .svgStatic {
@@ -110,29 +111,55 @@
 
 .backBtn {
   position: fixed;
-  top: 1.5rem;
-  left: 1.5rem;
-  bottom: auto;
-  transform: none;
-  z-index: 100;
+  top: 2rem;
+  left: 2rem;
+  z-index: 9998;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   font-weight: 300;
-  letter-spacing: 0.25em;
-  color: rgba(200, 180, 140, 0.8);
-  text-transform: lowercase;
-  background: rgba(10, 8, 6, 0.6);
-  border: 1px solid rgba(200, 180, 140, 0.3);
-  border-radius: 2px;
-  padding: 6px 14px;
+  letter-spacing: 0.2em;
+  color: rgba(201, 168, 76, 0.65);
+  background: rgba(10, 8, 6, 0.55);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 40px;
+  padding: 8px 24px;
   cursor: none;
-  backdrop-filter: blur(4px);
-  transition: color 0.3s ease, border-color 0.3s ease;
+  backdrop-filter: blur(10px);
+  transition: color 0.3s ease, background 0.3s ease;
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .backBtn:hover {
-  color: rgba(200, 180, 140, 1);
-  border-color: rgba(200, 180, 140, 0.7);
+  color: rgba(201, 168, 76, 1);
+  background: rgba(201, 168, 76, 0.1);
+}
+
+.fullscreenBtn {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 9998;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 8, 6, 0.55);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  color: rgba(201, 168, 76, 0.65);
+  cursor: none;
+  pointer-events: all;
+  transition: color 0.3s ease, background 0.3s ease;
+}
+
+.fullscreenBtn:hover {
+  color: rgba(201, 168, 76, 1);
+  background: rgba(201, 168, 76, 0.1);
 }
 
 .tooltip {
@@ -140,16 +167,16 @@
   z-index: 9990;
   pointer-events: none;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.7rem;
-  font-weight: 400;
-  letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(30, 15, 5, 0.75);
-  padding: 3px 8px 4px;
-  border-radius: 2px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: rgba(201, 168, 76, 0.9);
+  background: rgba(10, 8, 6, 0.55);
+  padding: 5px 14px 6px;
+  border-radius: 40px;
+  border: 1px solid rgba(201, 168, 76, 0.25);
   white-space: nowrap;
-  backdrop-filter: blur(4px);
-  text-transform: lowercase;
+  backdrop-filter: blur(10px);
 }
 
 .vignette {
@@ -190,14 +217,14 @@
 .cursor {
   position: fixed;
   top: 0; left: 0;
-  width: 6px; height: 6px;
-  background: rgba(120, 75, 15, 0.65);
+  width: 10px; height: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 3px rgba(10, 8, 6, 0.8); 
   border-radius: 50%;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 10001;
   transform: translate(-50%, -50%);
   transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
-  mix-blend-mode: difference;
 }
 
 .cursorHide {
@@ -210,29 +237,45 @@
   position: fixed;
   top: 0; left: 0;
   width: 26px; height: 26px;
-  border: 1px solid rgba(120, 75, 15, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.6); 
+  box-shadow: 0 0 2px rgba(10, 8, 6, 0.3); 
   border-radius: 50%;
   pointer-events: none;
-  z-index: 9998;
+  z-index: 10001;
   transform: translate(-50%, -50%);
-  transition: left 0.1s ease, top 0.1s ease,
-              width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
 }
 
 .ringBig {
   width: 46px !important;
   height: 46px !important;
-  border-color: rgba(120, 75, 15, 0.7) !important;
+  border-color: rgba(255, 255, 255, 0.95) !important; 
+}
+
+.cursorClick {
+  transform: translate(-50%, -50%) scale(0.6) !important;
+}
+
+.ringClick {
+  transform: translate(-50%, -50%) scale(0.8) !important;
+  border-color: rgba(255, 255, 255, 0.95) !important; 
 }
 
 .ordiVideo3D {
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
   display: block;
   pointer-events: none;
+
   transform-origin: center center;
-  transform: perspective(800px) rotateY(-4deg) rotateX(1deg) skewX(0.5deg) scale(1.01);
+  transform:
+    perspective(800px)
+    rotateY(-4deg)
+    rotateX(1deg);
+
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .arrowBtn {
@@ -294,4 +337,109 @@
 
 .unsupportedScreen a:hover {
   opacity: 0.7;
+}
+
+/* ── Taskbar centrale ── */
+.taskbar {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #0a08068c;
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 40px;
+  padding: 6px 8px;
+  backdrop-filter: blur(10px);
+  pointer-events: all;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+.taskbarBtn {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: none;
+  color: #c9a84ca6;
+  font-size: 1.1rem;
+  transition: color 0.3s ease, background 0.3s ease;
+  position: relative;
+  pointer-events: all;
+}
+
+.taskbarBtn:hover {
+  color: rgba(201, 168, 76, 1);
+  background: rgba(201, 168, 76, 0.1);
+}
+
+.taskbarDivider {
+  width: 1px;
+  height: 20px;
+  background: #c9a84c33;
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
+
+.helpModal {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 8, 6, 0.72);
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.3s ease;
+}
+
+.helpModalInner {
+  background: rgba(20, 14, 8, 0.95);
+  border: 1px solid #c9a84c4d;
+  border-radius: 16px;
+  padding: 52px 64px;      
+  max-width: 600px;        
+  width: 90%;
+  font-family: 'Cormorant Garamond', serif;
+  color: rgba(255, 240, 200, 0.9);
+  position: relative;
+}
+
+.helpModalClose {
+  position: absolute;
+  top: 27px;
+  right: 24px;
+  background: transparent;
+  border: none;
+  color: rgba(201, 168, 76, 0.5);
+  font-size: 4rem;          
+  cursor: none;
+  transition: color 0.2s ease;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.helpModalClose:hover {
+  color: rgba(201, 168, 76, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.cursorOnModal {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 240, 200, 0.9);
+  mix-blend-mode: normal;
+  opacity: 1;
+  z-index: 9000;
 }
