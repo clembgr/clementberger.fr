@@ -71,7 +71,9 @@ export default function MurDroite({ onClose, onIframeHover }) {
       <div
         style={{
           position: 'absolute',
-          top: '40px', bottom: '40px',  left: '300px', right: '40px',
+          top: '40px', bottom: '40px', 
+          left: 'clamp(300px, 300px, 600px)',
+          right: '40px',
           background: SAND, borderRadius: '18px',
           zIndex: 50, overflow: 'hidden',
           display: 'flex', flexDirection: 'column',
@@ -183,11 +185,12 @@ export default function MurDroite({ onClose, onIframeHover }) {
         {currentTab.iframe && (
           <div style={{
             animation: 'murd-fadein 0.25s ease',
-            border: '1.5px solid rgba(27,59,34,0.13)',
-            borderRadius: '16px',
-            overflow: 'hidden',
-            boxShadow: '0 8px 28px rgba(27,59,34,0.08)',
-            height: '600px',
+            flex: 1,
+            minHeight: 0,
+            margin: 0,
+            padding: 0,
+            border: 'none',
+            outline: 'none',
             position: 'relative',
             pointerEvents: 'auto'
           }}
@@ -195,20 +198,18 @@ export default function MurDroite({ onClose, onIframeHover }) {
             onMouseLeave={() => onIframeHover?.(false)}
           >
             <iframe
-              src="https://projets.clementberger.fr"
-              style={{ width: '100%', height: '100%', border: 'none', display: 'block', pointerEvents: 'auto' }}
+              src="https://projets.clementberger.fr/?mode=petit"
+              style={{ width: '100%', height: '100%', border: 'none', outline: 'none', display: 'block', pointerEvents: 'auto' }}
               title="Projets informatiques"
             />
           </div>
         )}
 
-        {/* ── Contenu : onglets normaux ── */}
         {!currentTab.iframe && (
           <div
             className="murd-content"
             style={{ flex: 1, overflowY: 'auto', padding: '20px 16px 40px 16px' }}
           >
-            {/* VUE PLEINE PAGE */}
             {currentTab.fullPage && allItems.length === 1 && (
               <FullPageView
                 item={allItems[0]}

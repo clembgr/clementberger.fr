@@ -1018,7 +1018,7 @@ export default function Home() {
                   }}
                 >
                   <iframe 
-                    src="https://projets.clementberger.fr/" 
+                    src="https://projets.clementberger.fr/?mode=grand" 
                     title="Ordinateur" 
                     className={styles.ordiIframe}
                     style={{ width: '100%', height: '100%', pointerEvents: 'auto' }} 
