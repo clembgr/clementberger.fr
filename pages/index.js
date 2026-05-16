@@ -722,17 +722,7 @@ export default function Home() {
     if (transitioning.current) return
     transitioning.current = true
 
-    if (cursorRef.current) {
-      cursorRef.current.style.opacity = '1'
-      cursorRef.current.style.transition = ''
-    }
-    if (ringRef.current) {
-      ringRef.current.style.opacity = '1'
-      ringRef.current.style.transition = ''
-    }
-
     const { vW, vH } = vpRef.current
-
     const overlay = document.createElement('div')
     Object.assign(overlay.style, {
       position: 'fixed', inset: '0',
@@ -762,6 +752,17 @@ export default function Home() {
         overlay.addEventListener('transitionend', () => {
           overlay.remove()
           transitioning.current = false
+          // Reset curseur ICI, après que l'overlay soit parti et la chambre visible
+          if (cursorRef.current) {
+            cursorRef.current.style.opacity = '1'
+            cursorRef.current.style.transition = ''
+            cursorRef.current.classList.remove(styles.cursorHide)
+          }
+          if (ringRef.current) {
+            ringRef.current.style.opacity = '1'
+            ringRef.current.style.transition = ''
+            ringRef.current.classList.remove(styles.ringBig)
+          }
         }, { once: true })
       }, 80)
     }, 500)
