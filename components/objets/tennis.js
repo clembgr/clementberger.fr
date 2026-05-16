@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { getItemById } from '../../data/portfolio';
 
-
 export default function Tennis() {
   const DATA = getItemById('raquette-tennis');
 
@@ -15,7 +14,6 @@ export default function Tennis() {
   const ballPos = useRef({ x: 30, y: 70 });
   const ballVel = useRef({ x: 0, y: 0 });
   const isDragging = useRef(false);
-  const lastMousePos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const loop = () => {
@@ -55,22 +53,18 @@ export default function Tennis() {
     };
 
     rafRef.current = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(rafRef.current);
+    
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      document.body.style.cursor = 'default';
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointercancel', handlePointerUp);
+    };
   }, []);
-
-  const handlePointerDown = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    isDragging.current = true;
-    lastMousePos.current = { x: e.clientX, y: e.clientY };
-    ballVel.current = { x: 0, y: 0 };
-    if (ballRef.current) ballRef.current.style.cursor = 'grabbing';
-  };
 
   const handlePointerMove = (e) => {
     if (!isDragging.current || !containerRef.current) return;
-    e.preventDefault();
-    e.stopPropagation();
     
     const rect = containerRef.current.getBoundingClientRect();
     const newX = ((e.clientX - rect.left) / rect.width) * 100;
@@ -84,13 +78,35 @@ export default function Tennis() {
     ballPos.current = { x: newX, y: newY };
   };
 
-  const handlePointerUp = (e) => {
-    if (isDragging.current) {
-      e.preventDefault();
-      e.stopPropagation();
-      isDragging.current = false;
-      if (ballRef.current) ballRef.current.style.cursor = 'grab';
-    }
+  const handlePointerUp = () => {
+    isDragging.current = false;
+    document.body.style.cursor = 'default';
+    if (ballRef.current) ballRef.current.style.cursor = 'grab';
+    
+    window.removeEventListener('pointermove', handlePointerMove);
+    window.removeEventListener('pointerup', handlePointerUp);
+    window.removeEventListener('pointercancel', handlePointerUp);
+
+    const preventClick = (ev) => {
+      ev.stopPropagation();
+      ev.preventDefault();
+      window.removeEventListener('click', preventClick, true);
+    };
+    window.addEventListener('click', preventClick, true);
+    setTimeout(() => window.removeEventListener('click', preventClick, true), 50);
+  };
+
+  const handlePointerDown = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    isDragging.current = true;
+    ballVel.current = { x: 0, y: 0 };
+    document.body.style.cursor = 'grabbing';
+    if (ballRef.current) ballRef.current.style.cursor = 'grabbing';
+    
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointercancel', handlePointerUp);
   };
 
   return (
@@ -98,9 +114,6 @@ export default function Tennis() {
       ref={containerRef}
       id="tennis-container"
       onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerLeave={handlePointerUp}
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -111,10 +124,11 @@ export default function Tennis() {
         padding: '4cqw 6cqw 9vh 6cqw', 
         position: 'relative',
         overflow: 'hidden',
-        pointerEvents: 'auto'
+        pointerEvents: 'auto',
+        userSelect: 'none',
+        WebkitUserSelect: 'none'
       }}
     >
-      {/* Titre de la page */}
       <h1 style={{
         fontFamily: 'Cormorant Garamond, serif',
         fontSize: '11cqw',
@@ -128,13 +142,13 @@ export default function Tennis() {
         {DATA.label}
       </h1>
 
-      {/* Conteneur de la raquette et des textes */}
       <div style={{ flex: 1, position: 'relative', width: '100%', pointerEvents: 'none' }}>
         
-        {/* Raquette */}
         <img 
           src="/images/raquette-tennis.svg" 
           alt="Raquette de tennis"
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
           style={{
             position: 'absolute',
             right: -115,
@@ -145,10 +159,8 @@ export default function Tennis() {
             opacity: 0.85,
             objectPosition: 'rightbottom',
           }}
-          draggable={false}
         />
 
-        {/* TITRE ET LIGNE */}
         <div style={{
           position: 'absolute',
           top: '12%',
@@ -174,7 +186,6 @@ export default function Tennis() {
           <div style={{ width: '12cqw', height: '3px', background: darkGreen }} />
         </div>
 
-        {/* PARAGRAPHE */}
         <p style={{
           position: 'absolute',
           top: '33.5%',
@@ -192,7 +203,6 @@ export default function Tennis() {
           {DATA.details[0].texte}
         </p>
 
-        {/* PARAGRAPHE */}
         <p style={{
           position: 'absolute',
           top: '55%',
@@ -212,12 +222,14 @@ export default function Tennis() {
 
       </div>
 
-      {/* Balle */}
       <img 
         ref={ballRef}
         src="/images/objets/balle-tennis.svg"
         alt="Balle de tennis"
         onPointerDown={handlePointerDown}
+        onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+        draggable={false}
+        onDragStart={(e) => e.preventDefault()}
         style={{
           position: 'absolute',
           width: '8cqw',
@@ -229,7 +241,6 @@ export default function Tennis() {
           filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.15))',
           pointerEvents: 'auto'
         }}
-        draggable={false}
       />
     </div>
   );

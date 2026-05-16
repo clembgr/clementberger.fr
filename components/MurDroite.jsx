@@ -71,7 +71,7 @@ export default function MurDroite({ onClose, onIframeHover }) {
       <div
         style={{
           position: 'absolute',
-          top: '40px', bottom: '40px',  left: 'clamp(20px, 25vw, 300px)', right: '40px',
+          top: '40px', bottom: '40px',  left: '300px', right: '40px',
           background: SAND, borderRadius: '18px',
           zIndex: 50, overflow: 'hidden',
           display: 'flex', flexDirection: 'column',
