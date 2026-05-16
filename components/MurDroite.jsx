@@ -81,7 +81,7 @@ export default function MurDroite({ onClose, onIframeHover }) {
         onClick={e => e.stopPropagation()}
       >
         <style>{`
-          .murd-content::-webkit-scrollbar { width: 8px; }   /* ← était 5px */
+          .murd-content::-webkit-scrollbar { width: 8px; }
           .murd-content::-webkit-scrollbar-track { background: rgba(250,215,153,0.3); border-radius: 4px; }
           .murd-content::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.45); border-radius: 4px; }
           .murd-content::-webkit-scrollbar-thumb:hover { background: rgba(201,168,76,0.75); }
@@ -132,7 +132,7 @@ export default function MurDroite({ onClose, onIframeHover }) {
         </button>
 
         {/* ── En-tête ── */}
-        <div style={{ padding: '20px 24px 0 58px', flexShrink: 0 }}>
+        <div style={{ padding: '20px 24px 0 58px', flexShrink: 0, position: 'relative' }}>
           <p style={{
             fontFamily: 'Cormorant Garamond, serif', fontSize: '20px',
             fontWeight: 700, letterSpacing: '0.28em',
@@ -146,6 +146,36 @@ export default function MurDroite({ onClose, onIframeHover }) {
           }}>
             Clément BERGER
           </h1>
+
+          {/* Bouton au-dessus de l'onglet Projet (uniquement si actif) */}
+          {currentTab.iframe && (
+            <a
+              href="https://projets.clementberger.fr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="murd-btn"
+              style={{
+                position: 'absolute',
+                bottom: '14px',
+                right: '24px',
+                zIndex: 55,
+                textDecoration: 'none',
+                padding: '5px 12px',
+                fontSize: '14px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                animation: 'murd-fadein 0.2s ease',
+              }}
+            >
+              <span>ouvrir le site</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+          )}
         </div>
 
         {/* ── Onglets ── */}
