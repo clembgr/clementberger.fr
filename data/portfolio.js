@@ -34,7 +34,7 @@ export const PORTFOLIO_CATEGORIES = [
                 Dès son arrivée, Clément a fait preuve de curiosité quant à son environnement de travail, notamment en cherchant à comprendre les enjeux sécuritaires liées à une mission en centrale nucléaire.
                 Il a rapidement fait preuve d'une réelle motivation à s'intégrer et à apprendre. Il a su s'adapter à nos outils et contraintes organisationnelles, et a abordé chaque tâche avec sérieux.
                 Nous avons particulièrement apprécié sa disponibilité et sa facilité d'intégration au sein de notre collectif. Son attitude positive et son enthousiasme sont salués par l'ensemble de l'équipe.
-                Ce stage a donc été une réussite tant pour Clément que pour notre service. Nous sommes convaincus qu'il possède toutes les qualités pour réussir dans le domaine de l'informatique." Maïlys BOSSHARDT, tutrice de mon stage à EDF.`},
+                Ce stage a donc été une réussite tant pour Clément que pour notre service. Nous sommes convaincus qu'il possède toutes les qualités pour réussir dans le domaine de l'informatique." Ma tutrice de stage à EDF.`},
         ],
         bullets: [`Curieux`, `Équilibre autonomie/collaboration`, `Création`],
       },
@@ -265,8 +265,8 @@ export const PORTFOLIO_CATEGORIES = [
         svgId: `/images/objets/basket.png`,
         summary: `Je participe à des trails et courses locales régulièrement, tout en courant de façon hebdomadaire.`,
         details: [
-          {titre: `Ma nouvelle passion`, texte: `Le cross du collège/lycée était pour moi un supplice, notamment dû à mon asthme très léger. Mais depuis quelques années, à force de courir avec mon père pour me maintenir en forme, je prends désormais réellement du plaisir pour ce sport.`},
-          {titre: null, texte: `J'ai couru le XTrail de l'association Macadam à Saint Nicolas d'Aliermont cette année + l'année dernière, le trail de la forêt d'Eu mais aussi la Course du château à Troissereux. Je cours souvent seul des 5km, mais aussi plus d'une dizaine de kilomètres avec mes amis ou mon père.`},
+          {titre: `Ma nouvelle passion`, texte: `Le cross du collège/lycée était pour moi un supplice, je n'aimais pas du tout. Mais depuis quelques années, à force de courir avec régulièrement pour me maintenir en forme, je prends désormais réellement du plaisir pour ce sport.`},
+          {titre: null, texte: `J'ai couru le XTrail de l'association Macadam à Saint Nicolas d'Aliermont cette année + l'année dernière, le trail de la forêt d'Eu mais aussi la Course du château à Troissereux. Je cours souvent seul des 5km, mais aussi plus d'une dizaine de kilomètres avec mes amis ou ma famille.`},
         ],
         bullets: [
           `5-10km hebdomadaires`,
@@ -329,7 +329,7 @@ export const PORTFOLIO_CATEGORIES = [
         svgId: `/images/objets/livres.png`,
         summary: `De la BD d'enfance à Harry Potter et Monte-Cristo, avec un futur intérêt pour l'écriture`,
         details: [
-          {titre: `Brûlez pour dévoiler`, texte: `Étant plus jeune et pour occuper l'intervalle entre mes deux cours de musique, je passais ce temps à la bibliothèque municipale, où je lisais et empruntais des bandes dessinées (Tintin, Astérix, Lucky Luke, Seuls, et bien plus). Ensuite s'est développée une passion pour les magazines Sciences&Vie Junior, qui m'ont permis de découvrir le monde de la science et de la technologie. Maintenant, après avoir lu quelques classiques par le lycée et m'étant fait "harceler" par ma soeur pour lire ses romans préférés, j'ai décidé de lire l'intégralité des livres Harry Potter, pour ensuite enchainer avec les deux tomes du Comte de Monte-Cristo.`},
+          {titre: `Brûlez pour dévoiler`, texte: `Étant plus jeune et pour occuper l'intervalle entre mes deux cours de musique, je passais ce temps à la bibliothèque municipale, où je lisais et empruntais des bandes dessinées (Tintin, Astérix, Lucky Luke, Seuls, et bien plus). Ensuite s'est développée une passion pour les magazines Sciences&Vie Junior, qui m'ont permis de découvrir le monde de la science et de la technologie. Maintenant, après avoir lu quelques classiques par le lycée, j'ai décidé de lire l'intégralité des livres Harry Potter, pour ensuite enchainer avec les deux tomes du Comte de Monte-Cristo.`},
           {titre: null, texte: `J'aimerais maintenant explorer l'écriture, majoritairement pour moi, ou peut-être écrire des chansons, de la poésie, ou même des histoires. Je n'ai jamais essayé, mais je pense que cela pourrait me plaire et m'occuper de manière créative.`},
         ],
       },
