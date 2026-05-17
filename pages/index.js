@@ -867,7 +867,6 @@ export default function Home() {
         overlay.addEventListener('transitionend', () => {
           overlay.remove()
           transitioning.current = false
-          // Reset curseur ICI, après que l'overlay soit parti et la chambre visible
           if (cursorRef.current) {
             cursorRef.current.style.opacity = '1'
             cursorRef.current.style.transition = ''
