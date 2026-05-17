@@ -22,6 +22,7 @@ export default function Abwheel() {
         boxSizing: 'border-box',
         scrollbarWidth: 'none',
         msOverflowStyle: 'none',
+        containerType: 'inline-size',
       }}
     >
       <style>{`
