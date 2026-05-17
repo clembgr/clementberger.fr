@@ -42,7 +42,7 @@ export const PORTFOLIO_CATEGORIES = [
         id: `journal`,
         label: `Valeurs & qualités`,
         svgId: `/images/objets/journal.png`,
-        summary: `Persévérant, résilient, créatif et pondéré : quatre qualités qui me définissent relativement bien`,
+        summary: `Persévérant, résilient, créatif et pondéré : quatre qualités qui me définissent relativement bien.`,
         details: [
           {titre: `Persévérant`, texte: `Je veux toujours que mon travail soit parfait, quitte à m'y investir plus que nécessaire. J'espère toujours produire un travail de qualité peu importe mon niveau de motivation`},
           {titre: `Résilient`, texte: `je sais m'adapter aux situations et adopter la bonne posture face aux éventuels problèmes rencontrés dans ma vie professionnelle, voire personnelle.`},
@@ -120,12 +120,12 @@ export const PORTFOLIO_CATEGORIES = [
         id: `edf`,
         label: `Stage développeur SI`,
         svgId: `/images/experience/cnpe.png`,
-        summary: `8 semaines à EDF Centrale de Penly — maintenance d'une application de gestion d'accès aux locaux`,
+        summary: `8 semaines à EDF Centrale de Penly — maintenance d'une application de gestion d'accès aux locaux.`,
         details: [
           { titre: `Le contexte`, texte: `On ne peut naturellement pas entrer dans n'importe quel local dans une centrale nucléaire, il faut pour cela faire une demande d'accès sur une certaine application interne. Or, à mon arrivée, cette application rencontrait plusieurs bugs et problèmes d'ergonomie, ce qui rendait son utilisation délicate, voire quasi impossible. Elle a donc été mise en arrêt avant mon arrivée.` },
           { titre: `Comment je m'en suis sorti`, texte: `J'ai dans un premier temps analysé en détail l'application pour recenser les problèmes dans un document texte. Ensuite, après m'être approprié le code source, je me suis attaqué à la résolution de ces bugs un par un, tout en optimisant et améliorant le code et l'interface par la mise en place de tests. L'application a ensuite été rétablie en service. Elle s'accompagne désormais d'un guide d'utilisation et d'une documentation technique que j'ai élaborés.` },
           { titre: `Les difficultés rencontrées`, texte: `Mon principal frein était de comprendre le code source. En effet, il avait été écrit par un ancien alternant et ne possédait quasi aucun commentaire. Le nom des variables et des fonctions était souvent peu descriptif, ce qui rendait la lecture et la compréhension du code beaucoup plus fastidieuse. Cela m'a donc pris beaucoup de temps, mais m'a aussi permis de davantage maîtriser le code, ce qui m'a probablement fait gagner du temps sur ma phase de "nettoyage" finale.` },
-          { titre: `Ce que j'en retire`, texte: `Cette expérience m'a appris à pratiquer de l'informatique dans un milieu professionnel exigeant. Il était donc vital de respecter les bonnes procédures et mesures de sécurité, à la fois sur le plan technique et organisationnel. Elle m'a également permis d'adopter une posture professionnelle adaptée, notamment côté relationnel.` },
+          { titre: `Ce que j'en retire`, texte: `Cette expérience m'a appris à pratiquer de l'informatique dans un milieu professionnel exigeant. Il était donc essentiel de respecter les bonnes procédures et mesures de sécurité, à la fois sur le plan technique et organisationnel. Elle m'a également permis d'adopter une posture professionnelle adaptée, notamment côté relationnel.` },
         ],
         media: [
           { 
@@ -168,7 +168,7 @@ export const PORTFOLIO_CATEGORIES = [
         summary: `Février 2021 — premier contact avec le monde professionnel dans une boutique informatique.`,
         details: [
           { titre: `La découverte`, texte: `Mon premier contact avec le monde professionnel s'est déroulé dans une boutique de réparation informatique pour mon stage de 3ème. Il m'a permis de découvrir ce qu'est un "petit commerce" dans le domaine de l'informatique.` },
-          { titre: `Ce que j'en retire`, texte: `Cette expérience m'a confirmé que je voulais réellement travaillerdans le domaine de l'informatique, mais pas la réparation matérielle, puisque ce n'est pas une branche qui m'intéresse.` },
+          { titre: `Ce que j'en retire`, texte: `Cette expérience m'a confirmé que je voulais réellement travailler dans le domaine de l'informatique, mais pas la réparation matérielle, puisque ce n'est pas une branche qui m'intéresse.` },
         ],
         media: [],
         tasks: [
@@ -265,7 +265,7 @@ export const PORTFOLIO_CATEGORIES = [
         svgId: `/images/objets/basket.png`,
         summary: `Je participe à des trails et courses locales régulièrement, tout en courant de façon hebdomadaire.`,
         details: [
-          {titre: `Ma nouvelle passion`, texte: `Le cross du collège/lycée était pour moi un supplice, notamment dû à mon asthme très léger. Mais depuis quelques années, à force de courir avec mon père pour me maintenir en forme, je prends désormais réellement du plaisir à courir.`},
+          {titre: `Ma nouvelle passion`, texte: `Le cross du collège/lycée était pour moi un supplice, notamment dû à mon asthme très léger. Mais depuis quelques années, à force de courir avec mon père pour me maintenir en forme, je prends désormais réellement du plaisir pour ce sport.`},
           {titre: null, texte: `J'ai couru le XTrail de l'association Macadam à Saint Nicolas d'Aliermont cette année + l'année dernière, le trail de la forêt d'Eu mais aussi la Course du château à Troissereux. Je cours souvent seul des 5km, mais aussi plus d'une dizaine de kilomètres avec mes amis ou mon père.`},
         ],
         bullets: [
@@ -329,7 +329,7 @@ export const PORTFOLIO_CATEGORIES = [
         svgId: `/images/objets/livres.png`,
         summary: `De la BD d'enfance à Harry Potter et Monte-Cristo, avec un futur intérêt pour l'écriture`,
         details: [
-          {titre: `Brûlez pour dévoiler`, texte: `Étant plus jeune et pour occuper l'intervalle entre mes deux cours de musique, je passais ce temps à la bibliothèque municipale, où je lisais et empruntais des bandes dessinées (Tintin, Astérix, Lucky Luke, Seuls, et bien plus). Ensuite s'est développée une passion pour les magazines Sciences&Vie Junior, qui m'ont permis de découvrir le monde de la science et de la technologie. Maintenant, après avoir lu quelques classiques par le lycée et m'étant fait harceler par ma soeur pour lire ses romans préférés, j'ai décidé de lire l'intégralité des livres Harry Potter, pour ensuite enchainer avec les deux tomes du Comte de Monte-Cristo.`},
+          {titre: `Brûlez pour dévoiler`, texte: `Étant plus jeune et pour occuper l'intervalle entre mes deux cours de musique, je passais ce temps à la bibliothèque municipale, où je lisais et empruntais des bandes dessinées (Tintin, Astérix, Lucky Luke, Seuls, et bien plus). Ensuite s'est développée une passion pour les magazines Sciences&Vie Junior, qui m'ont permis de découvrir le monde de la science et de la technologie. Maintenant, après avoir lu quelques classiques par le lycée et m'étant fait "harceler" par ma soeur pour lire ses romans préférés, j'ai décidé de lire l'intégralité des livres Harry Potter, pour ensuite enchainer avec les deux tomes du Comte de Monte-Cristo.`},
           {titre: null, texte: `J'aimerais maintenant explorer l'écriture, majoritairement pour moi, ou peut-être écrire des chansons, de la poésie, ou même des histoires. Je n'ai jamais essayé, mais je pense que cela pourrait me plaire et m'occuper de manière créative.`},
         ],
       },

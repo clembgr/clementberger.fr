@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState} from 'react';
 import { getItemById } from '../../data/portfolio';
 
 export default function QualiteValeur() {
+  
   const DATA = getItemById('journal');
   
   const [showFaiblesse, setShowFaiblesse] = useState(false);
@@ -26,7 +27,7 @@ export default function QualiteValeur() {
     { id: 12, top: 66.5, text: "l'expérience utilisateur pour rendre la navigation agréa", isBold: false },
     { id: 13, top: 71, text: "ble sur un site internet", isBold: false },
     { id: 14, top: 76, text: DATA.details[3].titre, isBold: true },
-    { id: 15, top: 80.5, text: "Je demande de l'aide que si besoin, et ne prends la", isBold: false },
+    { id: 15, top: 80.5, text: "Je ne demande de l'aide que si besoin, et ne prends la", isBold: false },
     { id: 16, top: 85, text: "parole que de manière concise et à bon escient", isBold: false },
   ];
 

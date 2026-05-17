@@ -3,6 +3,7 @@ import { getItemById } from '../../data/portfolio';
 
 
 export default function Platine() {
+
   const DATA = getItemById('platine');
 
   const darkGreen = '#1b3b22';

@@ -3,7 +3,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css' 
 import MurDroite from '../components/MurDroite'
 import MurGauche from '../components/MurGauche'
-import { injectSvgAnimations } from '../lib/svgAnimations'
+import { injectSvgAnimations, pauseSvgAnimations, resumeSvgAnimations } from '../lib/svgAnimations'
 
 // ─── SCÈNES ───────────────────────────────────────────────────────────────────
 const SCENE = { ENTREE: 'entree', CHAMBRE: 'chambre', ORDI: 'ordi' }
@@ -124,6 +124,96 @@ function getCoverTransform(dims, vW, vH) {
   return { scale, tx, ty }
 }
 
+const LOADING_TEXTS = [
+    "Patientez un instant, je prépare la visite...",
+    "Chargement des vidéos, images et autres contenus multimédias...",
+    "Optimisation de l'expérience utilisateur...",
+    "Quelques secondes de plus pour une expérience plus fluide !",
+  ]
+
+function LoadingScreen({ progress, total, currentFile }) {
+  const [textIndex, setTextIndex] = useState(0)
+  const loaded = Math.round((progress / 100) * total)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTextIndex(i => (i + 1) % LOADING_TEXTS.length)
+    }, 5000)
+    return () => clearInterval(id)
+  }, [])
+
+  const shortName = currentFile ? currentFile.split('/').pop() : '...'
+
+    return (
+      <div style={{
+        position: 'fixed', inset: 0,
+        background: '#0a0806',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '20px',
+      }}>
+        <p style={{
+          fontFamily: 'Cormorant Garamond, serif',
+          fontSize: '3rem',
+          fontWeight: 300,
+          letterSpacing: '0.1em',
+          color: 'rgba(200, 170, 100, 0.6)',
+          margin: 0,
+        }}>
+          Chargement
+        </p>
+
+        <div style={{
+          width: '360px',
+          height: '3px',
+          background: 'rgba(200, 170, 100, 0.12)',
+          borderRadius: '2px',
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+          <div style={{
+            position: 'absolute',
+            left: 0, top: 0, bottom: 0,
+            width: `${progress}%`,
+            background: 'rgba(200, 170, 100, 0.75)',
+            borderRadius: '2px',
+            transition: 'width 0.25s ease',
+          }} />
+        </div>
+
+        <p style={{
+          fontFamily: 'Cormorant Garamond, serif',
+          fontSize: '1.5rem',
+          fontWeight: 500,
+          fontStyle: 'italic',
+          letterSpacing: '0.15em',
+          color: 'rgba(200, 170, 100, 0.4)',
+          margin: 0,
+        }}>
+          {shortName} — {loaded} / {total} éléments chargés
+        </p>
+
+        <p style={{
+          fontFamily: 'Cormorant Garamond, serif',
+          fontSize: '2rem',
+          fontWeight: 400,
+          letterSpacing: '0.1em',
+          color: 'rgba(200, 170, 100, 0.6)',
+          margin: '8px 0 0 0',
+          transition: 'opacity 0.5s ease',
+          maxWidth: '700px',
+          textAlign: 'center',
+        }}>
+          {LOADING_TEXTS[textIndex]}
+        </p>
+      </div>
+    )
+  }
+
+const TOTAL_RESOURCES = 64
+
 // ─── Composant principal ──────────────────────────────────────────────────────
 export default function Home() {
   const chambreWrapperRef = useRef(null)
@@ -165,6 +255,10 @@ export default function Home() {
   const isOverUI = useRef(false)
   const activeElementIdRef = useRef(null)
   const [hideCursorGlobal, setHideCursorGlobal] = useState(false);
+  const paysageVideoRef = useRef(null)
+  const ordiVideoRef    = useRef(null)
+  const [currentFile, setCurrentFile] = useState('')
+
 
 
 
@@ -246,11 +340,12 @@ export default function Home() {
     let loaded = 0
     const total = resources.length
 
-    const onLoad = () => {
+    const onLoad = (src) => {
       loaded++
+      setCurrentFile(src)
       setLoadingProgress(Math.round((loaded / total) * 100))
       if (loaded === total) {
-        setTimeout(() => setLoadingDone(true), 400) 
+        setTimeout(() => setLoadingDone(true), 400)
       }
     }
 
@@ -259,25 +354,20 @@ export default function Home() {
         const v = document.createElement('video')
         v.src = src
         v.preload = 'auto'
-        v.addEventListener('canplaythrough', onLoad, { once: true })
-        v.addEventListener('error', onLoad, { once: true })
+        v.addEventListener('canplaythrough', () => onLoad(src), { once: true })
+        v.addEventListener('error', () => onLoad(src), { once: true })
       } else if (src.endsWith('.pdf')) {
-        fetch(src, { method: 'HEAD' })
-          .then(onLoad)
-          .catch(onLoad)
+        fetch(src, { method: 'HEAD' }).then(() => onLoad(src)).catch(() => onLoad(src))
       } else if (src.endsWith('.svg') && src.includes('chambre')) {
-        fetch(src)
-          .then(onLoad)
-          .catch(onLoad)
+        fetch(src).then(() => onLoad(src)).catch(() => onLoad(src))
       } else {
         const img = new Image()
         img.src = src
-        img.onload = onLoad
-        img.onerror = onLoad
+        img.onload = () => onLoad(src)
+        img.onerror = () => onLoad(src)
       }
     })
   }, [])
-
 
 
   useEffect(() => {
@@ -457,6 +547,31 @@ export default function Home() {
     rafRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafRef.current)
   }, [scene])
+
+  useEffect(() => {
+    const svgEl = svgContRef.current?.querySelector('svg')
+    const paysage = paysageVideoRef.current
+    const ordi    = ordiVideoRef.current
+
+    if (scene === SCENE.ORDI) {
+      pauseSvgAnimations(svgEl, ['plante-suspendue', 'feuillage', 'telephone'])
+      if (paysage) paysage.pause()
+      if (ordi)    ordi.pause()
+    } else if (rightPanelOpen) {
+      pauseSvgAnimations(svgEl, ['plante-suspendue', 'feuillage', 'telephone'])
+      if (paysage) paysage.play()
+      if (ordi)    ordi.pause()
+    } else if (activeElementId) {
+      pauseSvgAnimations(svgEl, ['plante-suspendue'])
+      if (paysage) paysage.pause()
+      if (ordi)    ordi.play()
+      resumeSvgAnimations(svgEl, ['feuillage', 'telephone'])
+    } else {
+      resumeSvgAnimations(svgEl, ['plante-suspendue', 'feuillage', 'telephone'])
+      if (paysage) paysage.play()
+      if (ordi)    ordi.play()
+    }
+  }, [activeElementId, rightPanelOpen])
 
   const handleTouchStart = useCallback((e) => {
     inputMode.current = 'touch'
@@ -847,52 +962,16 @@ export default function Home() {
 
   if (!vp.vW) return null
 
+  if (!loadingDone) {
+    return <LoadingScreen progress={loadingProgress} total={TOTAL_RESOURCES} currentFile={currentFile} />
+  }
+
   const isUnsupported = vp.vW < 900 || vp.vH >= vp.vW
   const isChambre     = scene === SCENE.CHAMBRE
   const isOrdi        = scene === SCENE.ORDI
   const isEntree      = scene === SCENE.ENTREE
 
 
-  if (!loadingDone) {
-    return (
-      <div style={{
-        position: 'fixed', inset: 0,
-        background: '#0a0806',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '24px',
-      }}>
-        <p style={{
-          fontFamily: 'Cormorant Garamond, serif',
-          fontSize: '1.5rem',
-          fontWeight: 800,
-          letterSpacing: '0.2em',
-          color: 'rgba(200, 170, 100, 0.5)',
-          textTransform: 'lowercase',
-          margin: 0,
-        }}>
-          chargement
-        </p>
-        <div style={{
-          width: '200px',
-          height: '1px',
-          background: 'rgba(200, 170, 100, 0.15)',
-          position: 'relative',
-          overflow: 'hidden',
-        }}>
-          <div style={{
-            position: 'absolute',
-            left: 0, top: 0, bottom: 0,
-            width: `${loadingProgress}%`,
-            background: 'rgba(200, 170, 100, 0.7)',
-            transition: 'width 0.3s ease',
-          }} />
-        </div>
-      </div>
-    )
-  }
   return (
     <>
       <Head>
@@ -961,7 +1040,7 @@ export default function Home() {
                   <img src="/images/cv.png" alt="CV Clément Berger" className={styles.cvImg} draggable={false} />
                 </a>
                 <div className={styles.paysageFrame} style={{ left: `${PAYSAGE.left}%`, top: `${PAYSAGE.top}%`, width: `${PAYSAGE.width}%`, height: `${PAYSAGE.height}%`, overflow: 'hidden' }}>
-                  <video src="/videos/paysage.webm" autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <video ref={paysageVideoRef} src="/videos/paysage.webm" autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 </div>
                 <div
                   className={styles.paysageFrame}
@@ -987,6 +1066,7 @@ export default function Home() {
                   }}
                 >
                   <video
+                    ref={ordiVideoRef}
                     src="/videos/video.webm"
                     autoPlay loop muted playsInline
                     className={styles.ordiVideo3D}
