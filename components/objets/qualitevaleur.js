@@ -63,6 +63,7 @@ export default function QualiteValeur() {
         pointerEvents: 'auto',
         overflow: 'hidden',
         alignItems: 'center',
+        containerType: 'inline-size',
       }}
     >
       <style>{`
