@@ -208,7 +208,10 @@ export const PORTFOLIO_CATEGORIES = [
         label: `L'intelligence artificielle`,
         svgId: null,
         summary: `Mon lien avec l'IA et la façon dont elle m'aide pour mes projets informatiques ou divers.`,
-        details: [{titre: `Posez une question sur mon rapport à l'ia`, texte: `Clément s'est énormément intéressé à l'intelligence artificielle et ce qu'elle permet de faire d'incroyable. Concrètement dans ce projet, cela lui a servi pour générer cette chambre à partir de rien. Comme tout développeur moderne, Clément se sert de l'ia comme outil pour l'assister dans ses différents projets et gagner un temps considérable qu'il a pu réinvestir dans la créativité et les détails qui font la différence. Ce qu'il aime avec l'ia, c'est de partir d'une idée et de pouvoir la concrétiser très rapidement même sans en avoir les compétences techniques.`}],
+        details: [
+          {titre : `Précision :`, texte : `La réponse qui va suivre est volontairement à la troisième personne, puisque c'est la réponse donnée par "l'ia" du mur de gauche lorsque l'on lui pose la question "Quel est le lien entre Clément et l'IA ?". Cette page est accessible en cliquant sur le logo gemini.`},
+          {titre: `Posez une question sur mon rapport à l'ia`, texte: `Clément s'est énormément intéressé à l'intelligence artificielle et ce qu'elle permet de faire d'incroyable. Concrètement dans ce projet, cela lui a servi pour générer cette chambre à partir de rien. Comme tout développeur moderne, Clément se sert de l'ia comme outil pour l'assister dans ses différents projets et gagner un temps considérable qu'il a pu réinvestir dans la créativité et les détails qui font la différence. Ce qu'il aime avec l'ia, c'est de partir d'une idée et de pouvoir la concrétiser très rapidement même sans en avoir les compétences techniques.`}
+        ],
         bullets: [`Génération d'images`, `Assistance au développement`],
       },
     ],
@@ -329,7 +332,7 @@ export const PORTFOLIO_CATEGORIES = [
         svgId: `/images/objets/livres.png`,
         summary: `De la BD d'enfance à Harry Potter et Monte-Cristo, avec un futur intérêt pour l'écriture`,
         details: [
-          {titre: `Brûlez pour dévoiler`, texte: `Étant plus jeune et pour occuper l'intervalle entre mes deux cours de musique, je passais ce temps à la bibliothèque municipale, où je lisais et empruntais des bandes dessinées (Tintin, Astérix, Lucky Luke, Seuls, et bien plus). Ensuite s'est développée une passion pour les magazines Sciences&Vie Junior, qui m'ont permis de découvrir le monde de la science et de la technologie. Maintenant, après avoir lu quelques classiques par le lycée, j'ai décidé de lire l'intégralité des livres Harry Potter, pour ensuite enchainer avec les deux tomes du Comte de Monte-Cristo.`},
+          {titre: null, texte: `Étant plus jeune et pour occuper l'intervalle entre mes deux cours de musique, je passais ce temps à la bibliothèque municipale, où je lisais et empruntais des bandes dessinées (Tintin, Astérix, Lucky Luke, Seuls, et bien plus). Ensuite s'est développée une passion pour les magazines Sciences&Vie Junior, qui m'ont permis de découvrir le monde de la science et de la technologie. Maintenant, après avoir lu quelques classiques par le lycée, j'ai décidé de lire l'intégralité des livres Harry Potter, pour ensuite enchainer avec les deux tomes du Comte de Monte-Cristo.`},
           {titre: null, texte: `J'aimerais maintenant explorer l'écriture, majoritairement pour moi, ou peut-être écrire des chansons, de la poésie, ou même des histoires. Je n'ai jamais essayé, mais je pense que cela pourrait me plaire et m'occuper de manière créative.`},
         ],
       },

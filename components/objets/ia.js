@@ -7,7 +7,7 @@ export default function Ia() {
   const darkGreen = '#1b3b22';
   const darkText = 'rgba(80, 50, 20, 0.95)';
 
-  const reponsePredefinie = DATA.details;
+  const reponsePredefinie = DATA.details[1].texte;
 
   const [query, setQuery] = useState('');
   const [conversation, setConversation] = useState([]);
@@ -103,7 +103,7 @@ export default function Ia() {
           color: darkGreen,
           margin: 0
         }}>
-          {DATA.details[0].titre}
+          {DATA.details[1].titre}
         </p>
       </div>
 
@@ -134,7 +134,7 @@ export default function Ia() {
             color: darkGreen
           }}>
             Essayez de taper :<br/>
-            <span style={{ fontStyle: 'italic' }}>"Quel est le lien entre Clément et l'IA ?"</span>
+            <span style={{ fontStyle: 'italic' }}>{DATA.details[1].titre}</span>
           </div>
         ) : (
           conversation.map((msg, index) => {

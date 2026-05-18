@@ -137,7 +137,7 @@ export default function Livre() {
           color: darkGreen,
           margin: 0
         }}>
-          {DATA.details[0].titre}
+          Brûlez pour dévoiler
         </p>
       </div>
 
