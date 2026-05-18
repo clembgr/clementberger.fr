@@ -269,7 +269,6 @@ export default function Home() {
       `translate(${tx - pan.current.x}px, ${ty - pan.current.y}px) scale(${scale})`
   }, [])
 
-  useEffect(() => {
     const resources = [
       '/videos/paysage.webm',
       '/videos/video.webm',
@@ -337,6 +336,8 @@ export default function Home() {
       '/images/taskbar/entree.svg',
       '/images/taskbar/entree1.svg'
     ]
+
+  useEffect(() => {
     let loaded = 0
     const total = resources.length
 
@@ -356,6 +357,7 @@ export default function Home() {
         v.preload = 'auto'
         v.addEventListener('canplaythrough', () => onLoad(src), { once: true })
         v.addEventListener('error', () => onLoad(src), { once: true })
+        setTimeout(() => onLoad(src), 8000)
       } else if (src.endsWith('.pdf')) {
         fetch(src, { method: 'HEAD' }).then(() => onLoad(src)).catch(() => onLoad(src))
       } else if (src.endsWith('.svg') && src.includes('chambre')) {
@@ -961,11 +963,21 @@ export default function Home() {
 
   if (!vp.vW) return null
 
-  if (!loadingDone) {
-    return <LoadingScreen progress={loadingProgress} total={TOTAL_RESOURCES} currentFile={currentFile} />
+  const isUnsupported = vp.vW < 900 || vp.vH >= vp.vW
+
+  if (isUnsupported) {
+    return (
+      <div className={styles.unsupportedScreen}>
+        <p>Désolé, mon portfolio n'est pas optimisé pour les téléphones ou les écrans verticaux.<br /><strong>Veuillez utiliser un ordinateur ou tourner votre tablette en mode paysage.</strong></p>
+        <p>Vous pouvez consulter mon cv sur <a href="https://cv.clementberger.fr" target="_blank" rel="noopener noreferrer">cv.clementberger.fr</a></p>
+      </div>
+    )
   }
 
-  const isUnsupported = vp.vW < 900 || vp.vH >= vp.vW
+  if (!loadingDone) {
+    return <LoadingScreen progress={loadingProgress} total={resources.length} currentFile={currentFile} />
+  }
+
   const isChambre     = scene === SCENE.CHAMBRE
   const isOrdi        = scene === SCENE.ORDI
   const isEntree      = scene === SCENE.ENTREE
@@ -981,15 +993,6 @@ export default function Home() {
 
       <div ref={cursorRef} className={styles.cursor} />
       <div ref={ringRef}   className={styles.ring}   />
-
-      {isUnsupported && (
-        <div className={styles.unsupportedScreen}>
-          <p>Désolé, mon portfolio n'est pas optimisé pour les téléphones ou les écrans verticaux.<br /><strong>Veuillez utiliser un ordinateur ou tourner votre tablette en mode paysage.</strong></p>
-          <p>Vous pouvez consulter mon cv sur <a href="https://cv.clementberger.fr" target="_blank" rel="noopener noreferrer">cv.clementberger.fr</a></p>
-        </div>
-      )}
-
-      <div style={{ visibility: isUnsupported ? 'hidden' : 'visible' }}>
 
         {hoveredId && (
           <div className={styles.tooltip} style={{ 
@@ -1579,7 +1582,6 @@ export default function Home() {
           {isChambre && showHint && <p className={styles.hint} style={{ zIndex: 5 }}>cliquer pour revenir</p>}
 
         </div>
-      </div>
     </>
   )
 }
