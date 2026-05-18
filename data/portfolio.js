@@ -101,7 +101,7 @@ export const PORTFOLIO_CATEGORIES = [
         summary: `Actuellement en 3ᵉ année de BUT Informatique à l'IUT d'Amiens, après un Bac général mention Bien au lycée Pablo Neruda de Dieppe.`,
         details: [
           {titre: `Lycée & Avant-Bac`, texte: `Mes années lycée à Dieppe. D'abord au lycée Ango en seconde, j'ai ensuite intégré le lycée Pablo Neruda pour la spécialité NSI (Numérique et Sciences Informatiques) en première et terminale, en plus de la spécialité Mathématiques. J'ai eu mon BAC général avec la mention Bien, option Euro et Maths Expertes ainsi que la certification Cambridge anglais niveau B1 et le BIA (Brevet d'Initiation Aéronautique).`},
-          {titre: `Mes Racines`, texte: `La ville où j'ai grandi. J'y ai passé toute mon enfance et mon adolescence. L'école élémentaire et le collège étaient tous deux dans cette commune.`},
+          {titre: `Mes Racines`, texte: `Saint Nicolas d'Aliermont est la ville dans laquelle j'ai grandi. J'y ai passé toute mon enfance et mon adolescence. L'école élémentaire et le collège étaient tous deux dans cette commune.`},
           {titre: `BUT Informatique`, texte: `Actuellement étudiant à l'IUT d'Amiens. J'y perfectionne mes compétences en développement, en mathématiques, en communication et en gestion de projets informatiques. Je passe en troisième année de BUT (Bac+3) à la rentrée 2026.`}
         ],
         bullets: [
@@ -153,7 +153,7 @@ export const PORTFOLIO_CATEGORIES = [
         summary: `Été 2025 — désherbage manuel de champs de carottes et betteraves à la ferme du Pavé Bio.`,
         details: [
           { titre: `Le concept`, texte: `Le concept est assez original : Nous étions 9, allongés derrière un tracteur qui suivait les lignes de champs, et nous avions pour unique objectif de désherber les cultures de carottes/betteraves. Le tracteur ne s'arrêtait pas, nous devions donc parfois sélectionner les mauvaises herbes et les retirer promptement plutôt que d'en retirer davantage mais en laissant les racines.` },
-          { titre: `Ce que j'en retire`, texte: `Cette expérience était une vraie mise à l'épreuve de ma motivation, surtout dans un environnement physique tel que celui ci, face aux conditions météorologiques parfois rudes. Cette expérience était positive, dans le sens ou j'ai pu contribuer au domaine vital qu'est l'agriculture, domaine qui m'intéresse et que je pourrais explorer de nouveau dans le futur.` },
+          { titre: `Ce que j'en retire`, texte: `Cette expérience était une vraie mise à l'épreuve de ma motivation, surtout dans un environnement physique tel que celui-ci, face aux conditions météorologiques parfois rudes. Cette expérience était positive, dans le sens ou j'ai pu contribuer au domaine vital qu'est l'agriculture, domaine qui m'intéresse et que je pourrais explorer de nouveau dans le futur.` },
         ],
         media: [],
         tasks: [
