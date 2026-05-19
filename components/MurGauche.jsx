@@ -34,9 +34,7 @@ export default function MurGauche({ activeElementId }) {
   const Composant = displayedId ? COMPOSANTS[displayedId] : null
 
   useEffect(() => {
-    if (activeElementId) {
-      setDisplayedId(activeElementId)
-    }
+    setDisplayedId(activeElementId)
   }, [activeElementId])
 
   return (

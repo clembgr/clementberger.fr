@@ -269,33 +269,32 @@ export default function Home() {
       `translate(${tx - pan.current.x}px, ${ty - pan.current.y}px) scale(${scale})`
   }, [])
 
-    const resources = [
-      '/videos/paysage.webm',
-      '/videos/video.webm',
-      '/audios/musique.mp3',
-      '/audios/musique1.mp3',
-      '/audios/musique2.mp3',
-      '/images/carte.svg',
-      '/images/chambre.svg',
-      '/images/curseur.png',
-      '/images/cv-icon.png',
-      '/images/cv.png',
-      '/images/disque1.jpg',
-      '/images/disque2.jpg',
-      '/images/email-icon.png',
+
+    const CRITICAL = [
       '/images/entree-fermee.svg',
       '/images/entree-ouverte.svg',
-      '/images/feuille-journal.svg',
-      '/images/github-icon.png',
-      '/images/linkedin-icon.png',
-      '/images/livre-mur.png',
-      '/images/logo.png',
       '/images/photo.png',
-      '/images/raquette-pingpong-mur.svg',
-      '/images/raquette-tennis.svg',
-      '/images/telephone-mur.svg',
-      '/images/tiroir-ouvert.svg',
+      '/images/logo.png',
+    ]
+
+    const CHAMBRE = [
+      '/images/chambre.svg',
+      '/images/cv.png',
       '/images/zoom-ordi.svg',
+      '/videos/paysage.webm',
+      '/videos/video.webm',
+      '/images/taskbar/aide.svg',
+      '/images/taskbar/central.svg',
+      '/images/taskbar/central1.svg',
+      '/images/taskbar/contact.svg',
+      '/images/taskbar/entree.svg',
+      '/images/taskbar/entree1.svg',
+      '/images/cv.png',
+    ]
+
+    const LAZY = [
+      '/images/objets/abwheel.png',
+      '/images/objets/saxophone.png',
       '/images/experience/boutique.png',
       '/images/experience/champ.png',
       '/images/experience/cnpe.png',
@@ -329,45 +328,62 @@ export default function Home() {
       '/images/pdf/edf-affiche.pdf',
       '/images/pdf/edf-affiche.png',
       '/images/pdf/edf-app.png',
-      '/images/taskbar/aide.svg',
-      '/images/taskbar/central.svg',
-      '/images/taskbar/central1.svg',
-      '/images/taskbar/contact.svg',
-      '/images/taskbar/entree.svg',
-      '/images/taskbar/entree1.svg'
+      '/images/tiroir-ouvert.svg',
+      '/images/disque1.jpg',
+      '/images/disque2.jpg',
+      '/images/github-icon.png',
+      '/images/linkedin-icon.png',
+      '/images/cv-icon.png',
+      '/images/email-icon.png',
+      '/images/telephone-mur.svg',
+      '/images/livre-mur.png',
+      '/images/raquette-pingpong-mur.svg',
+      '/images/raquette-tennis.svg',
+      '/images/feuille-journal.svg',
+      '/images/carte.svg',
+      '/images/curseur.png',
     ]
 
   useEffect(() => {
     let loaded = 0
-    const total = resources.length
+    const total = CRITICAL.length
 
-    const onLoad = (src) => {
-      loaded++
-      setCurrentFile(src)
-      setLoadingProgress(Math.round((loaded / total) * 100))
-      if (loaded === total) {
-        setTimeout(() => setLoadingDone(true), 400)
-      }
+    const loadOne = (src) => {
+      return new Promise((resolve) => {
+        if (src.endsWith('.webm') || src.endsWith('.mp4')) {
+          const v = document.createElement('video')
+          v.preload = 'metadata'
+          v.addEventListener('loadedmetadata', resolve, { once: true })
+          v.addEventListener('error', resolve, { once: true })
+          setTimeout(resolve, 5000)
+          v.src = src
+          return
+        }
+        if (src.endsWith('.pdf')) {
+          fetch(src, { method: 'HEAD' }).then(resolve).catch(resolve)
+          return
+        }
+        const img = new Image()
+        img.onload = resolve
+        img.onerror = resolve
+        img.src = src
+      })
     }
 
-    resources.forEach(src => {
-      if (src.endsWith('.webm') || src.endsWith('.mov')) {
-        const v = document.createElement('video')
-        v.src = src
-        v.preload = 'auto'
-        v.addEventListener('canplaythrough', () => onLoad(src), { once: true })
-        v.addEventListener('error', () => onLoad(src), { once: true })
-        setTimeout(() => onLoad(src), 8000)
-      } else if (src.endsWith('.pdf')) {
-        fetch(src, { method: 'HEAD' }).then(() => onLoad(src)).catch(() => onLoad(src))
-      } else if (src.endsWith('.svg') && src.includes('chambre')) {
-        fetch(src).then(() => onLoad(src)).catch(() => onLoad(src))
-      } else {
-        const img = new Image()
-        img.src = src
-        img.onload = () => onLoad(src)
-        img.onerror = () => onLoad(src)
-      }
+    Promise.all(
+      CRITICAL.map(src =>
+        loadOne(src).then(() => {
+          loaded++
+          setCurrentFile(src)
+          setLoadingProgress(Math.round((loaded / total) * 100))
+        })
+      )
+    ).then(() => {
+      setTimeout(() => setLoadingDone(true), 300)
+
+      Promise.all(CHAMBRE.map(src => loadOne(src))).then(() => {
+        LAZY.forEach(src => loadOne(src))
+      })
     })
   }, [])
 
@@ -419,57 +435,53 @@ export default function Home() {
     commit()
   }, [vp, scene, svgLoaded])
 
-  useEffect(() => {
-    let isMounted = true;
-    
-    fetch('/images/chambre.svg')
+  const fetchAndInjectChambreSvg = useCallback(() => {
+    return fetch('/images/chambre.svg')
       .then(r => r.text())
       .then(text => {
-        if (!isMounted) return;
-        
         const parser = new DOMParser()
         const doc = parser.parseFromString(text, 'image/svg+xml')
         const svgEl = doc.documentElement
-        
-        if (svgEl && svgEl.tagName.toLowerCase() === 'svg') {
-          const ordiPh = svgEl.querySelector('#ordi-placeholder')
-          if (ordiPh) ordiPh.style.opacity = '0'
-          
-          svgEl.setAttribute('viewBox', `0 0 ${DIMS.chambre.w} ${DIMS.chambre.h}`)
-          svgEl.removeAttribute('width')
-          svgEl.removeAttribute('height')
-          svgEl.style.width   = DIMS.chambre.w + 'px'
-          svgEl.style.height  = DIMS.chambre.h + 'px'
-          svgEl.style.display = 'block'
-          
-          svgEl.querySelectorAll('[id*="placeholder"], [id*="ordi-ph"]')
-            .forEach(el => {
-              if (el.id === 'ordi-placeholder' || el.id === 'paysage-placeholder') {
-                el.style.opacity = '0'
-                el.style.display = 'block' 
-              } else {
-                el.style.display = 'none'
-              }
-            })
-            
-          injectSvgAnimations(svgEl)
-          
-          const attachSvg = () => {
-            if (svgContRef.current) {
-              svgContRef.current.innerHTML = ''
-              svgContRef.current.appendChild(svgEl)
-              setSvgLoaded(true)
+
+        if (!svgEl || svgEl.tagName.toLowerCase() !== 'svg') return
+
+        svgEl.setAttribute('viewBox', `0 0 ${DIMS.chambre.w} ${DIMS.chambre.h}`)
+        svgEl.removeAttribute('width')
+        svgEl.removeAttribute('height')
+        svgEl.style.width   = DIMS.chambre.w + 'px'
+        svgEl.style.height  = DIMS.chambre.h + 'px'
+        svgEl.style.display = 'block'
+
+        svgEl.querySelectorAll('[id*="placeholder"], [id*="ordi-ph"]')
+          .forEach(el => {
+            if (el.id === 'ordi-placeholder' || el.id === 'paysage-placeholder') {
+              el.style.opacity = '0'
+              el.style.display = 'block'
             } else {
-              requestAnimationFrame(attachSvg)
+              el.style.display = 'none'
             }
+          })
+
+        injectSvgAnimations(svgEl)
+
+        const attachSvg = () => {
+          if (svgContRef.current) {
+            svgContRef.current.innerHTML = ''
+            svgContRef.current.appendChild(svgEl)
+            setSvgLoaded(true)
+          } else {
+            requestAnimationFrame(attachSvg)
           }
-          attachSvg()
         }
+        attachSvg()
       })
       .catch(console.error)
-
-    return () => { isMounted = false }
   }, [])
+
+  useEffect(() => {
+    if (!loadingDone) return
+    fetchAndInjectChambreSvg()
+  }, [loadingDone])
 
   useEffect(() => {
     const onPointerMove = (e) => {
@@ -752,31 +764,37 @@ export default function Home() {
     if (draggedFlag.current || transitioning.current || !vpRef.current.vW) return
     if (zoomed.current && activeElementIdRef.current === id) return
 
-      if (zoomed.current) {
-        transitioning.current = true
-        zoomed.current = false
-        setShowHint(true)
-        
-        const { vW, vH } = vpRef.current
-        animateTo(getChambreTransform(vW, vH), () => {
-          setActiveElementId(id)
-          activeElementIdRef.current = id
-          transitioning.current = true
-          zoomed.current = true
-          animateTo(getPlanTransform(vpRef.current.vH), () => {
-            transitioning.current = false
-          })
-        })
-      } else {
+    if (zoomed.current) {
       transitioning.current = true
-      zoomed.current = true
+      zoomed.current = false
       setShowHint(true)
-      setActiveElementId(id)
-      activeElementIdRef.current = id
-      animateTo(getPlanTransform(vpRef.current.vH), () => {
-        transitioning.current = false
+
+      const { vW, vH } = vpRef.current
+      animateTo(getChambreTransform(vW, vH), () => {
+        setActiveElementId(id)
+        activeElementIdRef.current = id
+        transitioning.current = true
+        zoomed.current = true
+        animateTo(getPlanTransform(vpRef.current.vH), () => {
+          transitioning.current = false
+        })
       })
-    }
+    } else {
+    transitioning.current = true
+    zoomed.current = true
+    setShowHint(true)
+
+    setActiveElementId(id)
+    activeElementIdRef.current = id
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        animateTo(getPlanTransform(vpRef.current.vH), () => {
+          transitioning.current = false
+        })
+      })
+    })
+  }
   }, [animateTo])
 
   const handleOrdiClick = useCallback((e) => {
@@ -883,17 +901,20 @@ export default function Home() {
       }, 80)
     }, 500)
   }, [commit])
-
+  
   const handleViewportClick = useCallback(() => {
     if (draggedFlag.current || transitioning.current || !zoomed.current || !vpRef.current.vW) return
-    if (rightPanelRef.current) return 
+    if (rightPanelRef.current) return
     transitioning.current = true
     zoomed.current = false
     setShowHint(false)
-    setActiveElementId(null)
-    activeElementIdRef.current = null
+
     const { vW, vH } = vpRef.current
-    animateTo(getChambreTransform(vW, vH), () => { transitioning.current = false })
+    animateTo(getChambreTransform(vW, vH), () => {
+      setActiveElementId(null)
+      activeElementIdRef.current = null
+      transitioning.current = false
+    })
   }, [animateTo])
 
   useEffect(() => {
@@ -975,7 +996,7 @@ export default function Home() {
   }
 
   if (!loadingDone) {
-    return <LoadingScreen progress={loadingProgress} total={resources.length} currentFile={currentFile} />
+    return <LoadingScreen progress={loadingProgress} total={CRITICAL.length} currentFile={currentFile} />
   }
 
   const isChambre     = scene === SCENE.CHAMBRE
